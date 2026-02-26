@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}403 - Доступ заборонено{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 100px; color: #333;">
+    <h1 style="font-size: 120px; margin: 0;">403</h1>
+    <h2>Доступ заборонено</h2>
+    <p style="font-size: 1.2em; margin: 20px 0;">
+        Ви не маєте прав для перегляду цієї сторінки.<br>
+        Можливо, потрібно увійти в систему або звернутися до адміністратора.
+    </p>
+    <a href="{% url 'home' %}" style="display: inline-block; padding: 12px 30px; background: #e74c3c; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
+        Повернутися на головну
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Сторінку не знайдено</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #3b82f6;
+            --accent-dark: #1e40af;
+            --accent-light: #dbeafe;
+            --purple: #a855f7;
+            --gray: #64748b;
+            --card: white;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --card: #1e293b;
+                --gray: #94a3b8;
+                --accent-light: #1e3a8a;
+                --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: -50%;
+                right: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient( circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50% ), radial-gradient( circle at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50% );
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-code {
+            font-size: clamp(8rem, 40vw, 20rem);
+            font-weight: 950;
+            line-height: 0.8;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: float 6s ease-in-out infinite, glow 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.2));
+            position: relative;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.2));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.3));
+            }
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 6vw, 3rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .message {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .search-form {
+            display: flex;
+            border-radius: 999px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: var(--card);
+            border: 2px solid var(--accent-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+            .search-form:focus-within {
+                box-shadow: var(--shadow-lg);
+                border-color: var(--accent);
+                transform: translateY(-2px);
+            }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.75rem;
+            font-size: 1.1rem;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+            .search-input::placeholder {
+                color: var(--gray);
+                opacity: 0.7;
+            }
+
+            .search-input::-webkit-search-cancel-button {
+                display: none;
+            }
+
+        .search-btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .search-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.2);
+                transition: left 0.3s ease;
+            }
+
+            .search-btn:hover::before {
+                left: 100%;
+            }
+
+            .search-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.4);
+            }
+
+            .search-btn:active {
+                transform: translateY(0);
+            }
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.75rem;
+            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow);
+            border: none;
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .home-button::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+                z-index: 0;
+            }
+
+            .home-button:hover::before {
+                width: 300px;
+                height: 300px;
+            }
+
+            .home-button span {
+                position: relative;
+                z-index: 1;
+            }
+
+            .home-button:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .home-button:active {
+                transform: translateY(-1px);
+            }
+
+        .social {
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease-out 0.5s backwards;
+        }
+
+        .social-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            border-radius: 50%;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .social-link::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: var(--accent);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.4s, height 0.4s;
+                z-index: 0;
+            }
+
+            .social-link:hover::before {
+                width: 100px;
+                height: 100px;
+            }
+
+            .social-link span {
+                position: relative;
+                z-index: 1;
+                transition: color 0.3s;
+            }
+
+            .social-link:hover span {
+                color: white;
+            }
+
+            .social-link:hover {
+                transform: scale(1.15) translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+            }
+
+        @media (max-width: 640px) {
+            main {
+                padding: 1.5rem;
+            }
+
+            .error-code {
+                margin-bottom: 1rem;
+            }
+
+            h2 {
+                margin-bottom: 1rem;
+            }
+
+            .message {
+                margin-bottom: 2rem;
+                font-size: 1rem;
+            }
+
+            .search-box {
+                margin-bottom: 2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+                border-radius: 16px;
+            }
+
+            .search-input {
+                padding: 1rem 1.5rem;
+                border-bottom: 2px solid var(--accent-light);
+            }
+
+            .search-btn {
+                padding: 1rem;
+                border-radius: 0;
+            }
+
+            .home-button {
+                font-size: 1rem;
+                padding: 1rem 2rem;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+
+            .social-link {
+                width: 45px;
+                height: 45px;
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .social-link {
+                background: rgba(59, 130, 246, 0.15);
+                color: var(--accent);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1 class="error-code">404</h1>
+            <h2>Сторінку не знайдено</h2>
+
+            <p class="message">
+                Вибачте, але сторінка, яку ви шукаєте, не існує або була переміщена.<br>
+                Спробуйте скористатися пошуком або поверніться на головну.
+            </p>
+
+            <form action="/search/" class="search-box" role="search">
+                <div class="search-form">
+                    <input type="search"
+                           name="q"
+                           class="search-input"
+                           placeholder="Що шукаємо сьогодні?"
+                           aria-label="Пошук по сайту"
+                           required />
+                    <button type="submit" class="search-btn">Знайти</button>
+                </div>
+            </form>
+
+            <a href="{% url 'home' %}" class="home-button">
+                <span>← Повернутися на головну</span>
+            </a>
+
+            <div class="social">
+                <span class="social-label">Залишайтеся в курсі</span>
+                <div class="social-links">
+                    <a href="https://t.me/yourcompany" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="social-link">
+                        <span>📱</span>
+                    </a>
+                    <a href="https://instagram.com/yourcompany" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+                        <span>📷</span>
+                    </a>
+                    <a href="https://facebook.com/yourcompany" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+                        <span>👥</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
